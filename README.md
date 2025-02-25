@@ -6,4 +6,4 @@ Technologies
 2. OpenRouter
 3. Tempo Labs
 
-4. if you got unauthorized error generate new api key in openrouter and replace it.
+# if you got unauthorized error generate new api key in openrouter and replace it in home.tsx.
