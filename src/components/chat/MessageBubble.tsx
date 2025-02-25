@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
+import Markdown from "marked-react";
 
 interface MessageBubbleProps {
   message: string;
@@ -9,6 +10,7 @@ interface MessageBubbleProps {
   timestamp?: string;
   isLoading?: boolean;
   avatarUrl?: string;
+  image?: string;
 }
 
 const MessageBubble = ({
@@ -19,6 +21,7 @@ const MessageBubble = ({
   avatarUrl = isAI
     ? "https://api.dicebear.com/7.x/bottts/svg?seed=gemini"
     : "https://api.dicebear.com/7.x/avataaars/svg?seed=user",
+  image,
 }: MessageBubbleProps) => {
   return (
     <div
@@ -47,7 +50,18 @@ const MessageBubble = ({
             >
               {isAI ? "Gemini" : "You"}
             </p>
-            <p className="text-sm text-foreground/90">{message}</p>
+            <div className="space-y-2">
+              {image && (
+                <img
+                  src={image}
+                  alt="Uploaded content"
+                  className="max-w-md rounded-lg shadow-sm"
+                />
+              )}
+              <div className="text-sm text-foreground/90 prose dark:prose-invert max-w-none">
+                <Markdown>{message.replace(/\n/g, "  \n")}</Markdown>
+              </div>
+            </div>
             <p className="text-xs text-muted-foreground">{timestamp}</p>
           </div>
         )}

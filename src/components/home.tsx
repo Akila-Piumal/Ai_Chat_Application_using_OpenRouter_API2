@@ -9,10 +9,11 @@ interface Message {
   content: string;
   isAI: boolean;
   timestamp: string;
+  image?: string;
 }
 
 const OPENROUTER_API_KEY =
-  "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";
+  "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";
 
 const Home = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -26,14 +27,20 @@ const Home = () => {
   ]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSendMessage = async (message: string) => {
+  const handleSendMessage = async (message: string, image?: File) => {
     try {
       setIsLoading(true);
+      let imageUrl = "";
+      if (image) {
+        imageUrl = URL.createObjectURL(image);
+      }
+
       const newUserMessage: Message = {
         id: Date.now().toString(),
         content: message,
         isAI: false,
         timestamp: new Date().toLocaleTimeString(),
+        image: imageUrl,
       };
       setMessages((prev) => [...prev, newUserMessage]);
 
@@ -41,6 +48,7 @@ const Home = () => {
         message,
         OPENROUTER_API_KEY,
         messages,
+        image,
       );
 
       const aiMessage: Message = {
@@ -61,6 +69,7 @@ const Home = () => {
     setIsDarkMode((prev) => !prev);
     document.documentElement.classList.toggle("dark");
   };
+
   return (
     <div className="flex flex-col h-screen bg-background">
       <ChatHeader isDarkMode={isDarkMode} onThemeToggle={handleThemeToggle} />

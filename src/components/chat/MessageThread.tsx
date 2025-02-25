@@ -8,6 +8,7 @@ interface Message {
   content: string;
   isAI: boolean;
   timestamp: string;
+  image?: string;
 }
 
 interface MessageThreadProps {
@@ -21,12 +22,6 @@ const MessageThread = ({
       id: "1",
       content: "Hello! How can I help you today?",
       isAI: true,
-      timestamp: new Date().toLocaleTimeString(),
-    },
-    {
-      id: "2",
-      content: "I have a question about artificial intelligence.",
-      isAI: false,
       timestamp: new Date().toLocaleTimeString(),
     },
   ],
@@ -49,6 +44,7 @@ const MessageThread = ({
                   message={message.content}
                   isAI={message.isAI}
                   timestamp={message.timestamp}
+                  image={message.image}
                 />
               </motion.div>
             ))}
